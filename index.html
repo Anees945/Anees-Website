@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <script>
+      // Ensure window.fetch is writable if a polyfill or iframe environment defines it as getter-only
+      try {
+        const origFetch = window.fetch;
+        let currentFetch = origFetch ? origFetch.bind(window) : undefined;
+        Object.defineProperty(window, 'fetch', {
+          get() {
+            return currentFetch;
+          },
+          set(fn) {
+            currentFetch = fn;
+          },
+          configurable: true,
+          enumerable: true,
+        });
+      } catch (e) {
+        // Fallback: no-op if window.fetch cannot be reconfigured
+      }
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anees Shahbaz - Website Developer Portfolio</title>
+    <meta name="description" content="Professional personal portfolio of Anees Shahbaz, a Website Developer specializing in modern business websites, e-commerce, custom dashboards, and digital solutions." />
+    <meta property="og:title" content="Anees Shahbaz - Website Developer Portfolio" />
+    <meta property="og:description" content="Professional personal portfolio of Anees Shahbaz, a Website Developer specializing in modern business websites, e-commerce, custom dashboards, and digital solutions." />
+    <meta property="og:image" content="/anees-shahbaz.jpg" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#05030A] text-white selection:bg-[#7C3AED]/30 selection:text-[#C4B5FD] overflow-x-hidden antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
