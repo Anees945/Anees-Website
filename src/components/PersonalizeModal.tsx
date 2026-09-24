@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Check, RotateCcw, Sparkles, User, Mail, Phone, MapPin, Calendar, Globe, Upload, Image as ImageIcon, Trash2, FolderGit2, Award } from 'lucide-react';
+import { X, Check, RotateCcw, Sparkles, User, Mail, Phone, MapPin, Calendar, Globe, Upload, Download, Link2, Image as ImageIcon, Trash2, FolderGit2, Award } from 'lucide-react';
 import { DeveloperProfile, ProjectItem, CertificateItem } from '../types';
 import { initialProfile } from '../data/portfolioData';
 
@@ -90,6 +90,16 @@ export default function PersonalizeModal({
     setFormData({ ...initialProfile });
   };
 
+  const handleDownloadProfileImage = () => {
+    if (!formData.profileImage) return;
+    const link = document.createElement('a');
+    link.href = formData.profileImage;
+    link.download = 'anees-shahbaz.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     onSaveProfile(formData);
@@ -146,7 +156,7 @@ export default function PersonalizeModal({
 
         <form onSubmit={handleSave} className="space-y-4">
           {/* Profile Photo Preview & Direct Upload */}
-          <div className="p-4 rounded-2xl bg-[#141026] border border-white/10 space-y-3">
+          <div className="p-4 rounded-2xl bg-[#141026] border border-white/10 space-y-4">
             <div className="flex items-center gap-4">
               <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-[#0A0718] border-2 border-[#6366F1]/50 shrink-0 shadow-md">
                 <img
@@ -161,11 +171,11 @@ export default function PersonalizeModal({
                 <div className="flex items-center gap-2 flex-wrap mb-1.5">
                   <span className="text-xs font-semibold text-white">Your Face Photo</span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                    Same-to-same Original
+                    Active Preview
                   </span>
                 </div>
                 <p className="text-xs text-[#94A3B8] mb-3">
-                  Upload your original unaltered photograph directly from your computer or phone so your real face appears across your website.
+                  Upload your original photograph directly or provide a direct image link.
                 </p>
 
                 <div className="flex items-center gap-2 flex-wrap">
@@ -183,8 +193,20 @@ export default function PersonalizeModal({
                     className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] hover:from-[#4F46E5] hover:to-[#7C3AED] text-white text-xs font-semibold shadow-md transition-all cursor-pointer"
                   >
                     <Upload className="w-3.5 h-3.5" />
-                    Upload My Exact Photo
+                    Upload Photo from Device
                   </button>
+
+                  {formData.profileImage && formData.profileImage.startsWith('data:') && (
+                    <button
+                      type="button"
+                      onClick={handleDownloadProfileImage}
+                      title="Download as anees-shahbaz.jpg to put into GitHub public folder"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-semibold transition-colors cursor-pointer"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Save as anees-shahbaz.jpg
+                    </button>
+                  )}
 
                   {formData.profileImage !== '/anees-shahbaz.jpg' && (
                     <button
@@ -199,8 +221,33 @@ export default function PersonalizeModal({
               </div>
             </div>
 
-            <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-[#64748B]">
-              <span>Supported formats: JPG, PNG, WEBP. Stored instantly in your browser session.</span>
+            {/* Direct Image URL input for cross-browser persistence */}
+            <div className="pt-3 border-t border-white/5 space-y-1.5">
+              <label className="block text-[11px] font-semibold text-[#CBD5E1] flex items-center gap-1.5">
+                <Link2 className="w-3.5 h-3.5 text-[#818CF8]" />
+                <span>Or Direct Public Image Link (Works permanently across ALL browsers on Vercel)</span>
+              </label>
+              <input
+                type="url"
+                placeholder="e.g. https://i.imgur.com/... or https://raw.githubusercontent.com/..."
+                value={formData.profileImage && formData.profileImage.startsWith('data:') ? '' : formData.profileImage}
+                onChange={(e) => {
+                  const val = e.target.value.trim();
+                  setFormData((prev) => ({ ...prev, profileImage: val || '/anees-shahbaz.jpg' }));
+                }}
+                className="w-full px-3 py-2 rounded-xl bg-[#0F0C1E] border border-white/10 text-white text-xs focus:border-[#818CF8] outline-none placeholder-[#64748B]"
+              />
+            </div>
+
+            {/* Vercel Cross-Browser Guidance Note */}
+            <div className="p-3 rounded-xl bg-[#100D22] border border-[#6366F1]/30 text-[11px] text-[#94A3B8] space-y-1">
+              <span className="font-semibold text-amber-300 flex items-center gap-1">
+                📌 Vercel &amp; Cross-Browser Photo Guide:
+              </span>
+              <p className="leading-relaxed">
+                Jab aap browser me photo upload karte hain to wo us waqt us browser me save hoti hai.
+                Dusre kisi bhi mobile ya browser me apni real photo hamesha dikhane ke liye apni photo ka naam <strong className="text-white">anees-shahbaz.jpg</strong> rakh kar apne GitHub repository ke <code className="text-indigo-300 font-mono">public/</code> folder me replace kar dein, ya koi public Image URL upar enter karein!
+              </p>
             </div>
           </div>
 

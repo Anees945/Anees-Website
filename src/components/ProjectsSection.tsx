@@ -164,6 +164,7 @@ export default function ProjectsSection({
                     <img
                       src={project.image}
                       alt={project.title}
+                      referrerPolicy="no-referrer"
                       className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : null}

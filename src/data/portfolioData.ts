@@ -295,6 +295,7 @@ export const projectsData: ProjectItem[] = [
     statusNote:
       'Architected as a modular web application with customizable workflows for pharmacies, general stores, and retail businesses.',
     technologies: ['Supabase Backend', 'Database Integration', 'Admin Dashboards', 'Workflow Logic', 'UI/UX'],
+    image: '/projects/inventory-dashboard.jpg',
     features: [
       'Business-specific tailored dashboards (Medical/Pharmacy, General Stores, Retail)',
       'Real-time inventory and stock quantity tracking with alert thresholds',
@@ -333,6 +334,7 @@ export const projectsData: ProjectItem[] = [
     statusNote:
       'Designed to help salons establish a refined online brand, display service pricing, and receive direct appointment bookings.',
     technologies: ['Responsive Design', 'Booking System', 'WhatsApp Integration', 'Gallery Showcase', 'Mobile UI'],
+    image: '/projects/salon-website.jpg',
     features: [
       'Comprehensive services catalog with clear pricing and time durations',
       'Visual work gallery showcasing hair styling, treatments, and aesthetics',
@@ -371,6 +373,7 @@ export const projectsData: ProjectItem[] = [
     statusNote:
       'Combines customer-facing ordering with back-of-house operational controls for orders and product updates.',
     technologies: ['Menu & Cart System', 'Admin Dashboard', 'Order Tracking', 'Product Management', 'Business Insights'],
+    image: '/projects/food-ordering.jpg',
     features: [
       'Categorized interactive food menu with item descriptions and prices',
       'Frictionless customer cart with instant subtotal and tax calculation',
@@ -409,6 +412,7 @@ export const projectsData: ProjectItem[] = [
     statusNote:
       'Engineered with search-friendly product pages, structured spec tables, and admin management for device data.',
     technologies: ['Side-by-Side Comparison', 'Specification Engine', 'Search-Friendly UI', 'Affiliate Links', 'Admin Specs Manager'],
+    image: '/projects/phone-comparison.jpg',
     features: [
       'Structured technical specifications (Processor, Camera, Battery, Display, RAM)',
       'Side-by-side comparison matrix highlighting spec differences and advantages',
@@ -447,6 +451,7 @@ export const projectsData: ProjectItem[] = [
     statusNote:
       'Built using n8n automation, an AI Agent, and a Google Sheets knowledge base to answer service questions and pricing.',
     technologies: ['n8n Workflows', 'AI Agent Logic', 'Google Sheets DB', 'Conversation Memory', 'Automated Routing'],
+    image: '/projects/whatsapp-automation.jpg',
     features: [
       'Automated customer inquiry handling 24/7 without manual staff delays',
       'Google Sheets dynamic knowledge base for instant updates to services and pricing',

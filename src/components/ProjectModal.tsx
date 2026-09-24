@@ -90,6 +90,7 @@ export default function ProjectModal({ project, onClose, onInquireSimilar, onUpd
                 <img
                   src={project.image}
                   alt={project.title}
+                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
                 />
               </div>
