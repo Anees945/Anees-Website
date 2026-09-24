@@ -7,6 +7,7 @@ import {
   ProjectItem,
   CertificateItem,
   ValuePropItem,
+  ReviewItem,
 } from '../types';
 
 export const initialProfile: DeveloperProfile = {
@@ -534,6 +535,48 @@ export const whyWorkWithMeData: ValuePropItem[] = [
       'Honest communication, transparent milestone updates, and modern technical stacks engineered for future business expansion.',
     iconName: 'Cpu',
     highlightMetric: 'Modern Standards',
+  },
+];
+
+export const initialReviewsData: ReviewItem[] = [
+  {
+    id: 'rev-1',
+    name: 'Tariq Mehmood',
+    role: 'Founder & Retail Director',
+    companyOrProject: 'Retail & Wholesale Store',
+    projectType: 'E-Commerce Website & WhatsApp Ordering',
+    rating: 5,
+    content:
+      'Anees developed our e-commerce storefront with seamless WhatsApp ordering. The mobile responsiveness is lightning fast, and our customer inquiries and orders increased noticeably within the first month. Very cooperative, clear, and professional throughout!',
+    date: '12 March 2026',
+    verified: true,
+    location: 'Lahore, Pakistan',
+  },
+  {
+    id: 'rev-2',
+    name: 'Dr. Haris Khan',
+    role: 'Director',
+    companyOrProject: 'Health & Wellness Clinic',
+    projectType: 'Corporate Website & Patient Booking',
+    rating: 5,
+    content:
+      'Exceptional web development service! He rebuilt our medical practice website with clean typography and effortless appointment forms. He doesn’t just build templates; he suggested genuine improvements to how our patients navigate on mobile.',
+    date: '28 February 2026',
+    verified: true,
+    location: 'Islamabad, Pakistan',
+  },
+  {
+    id: 'rev-3',
+    name: 'Farhan Akhtar',
+    role: 'Operations Lead',
+    companyOrProject: 'Cargo & Logistics Hub',
+    projectType: 'Custom Business Web App & Tracking',
+    rating: 5,
+    content:
+      'Anees built our customer inquiry and shipment tracking portal. Zero downtime, perfectly optimized across phones and laptops, and delivered ahead of schedule. Highly recommended for any serious business looking for reliable execution.',
+    date: '10 February 2026',
+    verified: true,
+    location: 'Okara, Pakistan',
   },
 ];
 

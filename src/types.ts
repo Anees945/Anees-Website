@@ -73,6 +73,20 @@ export interface CertificateItem {
   isPlaceholder?: boolean;
 }
 
+export interface ReviewItem {
+  id: string;
+  name: string;
+  role: string;
+  companyOrProject?: string;
+  rating: number;
+  content: string;
+  date: string;
+  projectType?: string;
+  verified?: boolean;
+  avatarUrl?: string;
+  location?: string;
+}
+
 export interface ValuePropItem {
   id: string;
   title: string;

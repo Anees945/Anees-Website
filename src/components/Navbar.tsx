@@ -14,6 +14,7 @@ const navLinks = [
   { name: 'Skills & Tools', href: '#skills' },
   { name: 'Projects', href: '#projects' },
   { name: 'Certificates', href: '#certificates' },
+  { name: 'Reviews', href: '#testimonials' },
   { name: 'Contact', href: '#contact' },
 ];
 
@@ -37,7 +38,7 @@ export default function Navbar({ profile, onOpenPersonalize, isAdmin = false }: 
       setScrolled(window.scrollY > 40);
 
       // Section spy
-      const sections = ['hero', 'about', 'trust', 'services', 'skills', 'projects', 'certificates', 'contact'];
+      const sections = ['hero', 'about', 'trust', 'services', 'skills', 'projects', 'certificates', 'testimonials', 'contact'];
       const scrollPos = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {

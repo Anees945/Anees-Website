@@ -21,8 +21,9 @@ import {
   skillsData,
   projectsData,
   whyWorkWithMeData,
+  initialReviewsData,
 } from './data/portfolioData';
-import { DeveloperProfile, ProjectItem, CertificateItem } from './types';
+import { DeveloperProfile, ProjectItem, CertificateItem, ReviewItem } from './types';
 
 export default function App() {
   const [profile, setProfile] = useState<DeveloperProfile>(() => {
@@ -125,6 +126,45 @@ export default function App() {
       const updated = prev.filter((c) => c.id !== certId);
       try {
         localStorage.setItem('anees_shahbaz_portfolio_certificates', JSON.stringify(updated));
+      } catch {
+        // Ignore
+      }
+      return updated;
+    });
+  };
+
+  const [reviewsList, setReviewsList] = useState<ReviewItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('anees_shahbaz_portfolio_reviews');
+      if (saved) {
+        const parsed = JSON.parse(saved) as ReviewItem[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch {
+      // Fallback
+    }
+    return initialReviewsData;
+  });
+
+  const handleAddReview = (newReview: ReviewItem) => {
+    setReviewsList((prev) => {
+      const updated = [newReview, ...prev];
+      try {
+        localStorage.setItem('anees_shahbaz_portfolio_reviews', JSON.stringify(updated));
+      } catch {
+        // Ignore
+      }
+      return updated;
+    });
+  };
+
+  const handleDeleteReview = (reviewId: string) => {
+    setReviewsList((prev) => {
+      const updated = prev.filter((r) => r.id !== reviewId);
+      try {
+        localStorage.setItem('anees_shahbaz_portfolio_reviews', JSON.stringify(updated));
       } catch {
         // Ignore
       }
@@ -303,8 +343,13 @@ export default function App() {
         {/* Why Work With Me (Business problem solving & quality assurance) */}
         <WhyWorkWithMe items={whyWorkWithMeData} />
 
-        {/* Authentic Client Feedback & Collaboration notice */}
+        {/* Authentic Client Feedback & Reviews */}
         <TestimonialsSection
+          reviews={reviewsList}
+          onAddReview={handleAddReview}
+          onDeleteReview={handleDeleteReview}
+          profile={profile}
+          isAdmin={isAdmin}
           onInquireProject={() => scrollToContact()}
         />
 
