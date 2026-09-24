@@ -75,10 +75,9 @@ export default function App() {
       const saved = localStorage.getItem('anees_shahbaz_portfolio_certificates');
       if (saved) {
         const parsed = JSON.parse(saved) as CertificateItem[];
-        return certificatesData.map((initial) => {
-          const match = parsed.find((c) => c.id === initial.id);
-          return match ? { ...initial, image: match.image || initial.image } : initial;
-        });
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((c) => (c.image ? { ...c, isPlaceholder: false } : c));
+        }
       }
     } catch {
       // Fallback
@@ -88,7 +87,42 @@ export default function App() {
 
   const handleUpdateCertificateImage = (certificateId: string, imageUrl: string) => {
     setCertificatesList((prev) => {
-      const updated = prev.map((c) => (c.id === certificateId ? { ...c, image: imageUrl } : c));
+      const updated = prev.map((c) =>
+        c.id === certificateId ? { ...c, image: imageUrl, isPlaceholder: !imageUrl } : c
+      );
+      try {
+        localStorage.setItem('anees_shahbaz_portfolio_certificates', JSON.stringify(updated));
+      } catch {
+        // Ignore
+      }
+      return updated;
+    });
+  };
+
+  const handleSaveCertificate = (updatedCert: CertificateItem) => {
+    setCertificatesList((prev) => {
+      let updated: CertificateItem[];
+      const exists = prev.some((c) => c.id === updatedCert.id);
+      if (exists) {
+        updated = prev.map((c) =>
+          c.id === updatedCert.id ? { ...updatedCert, isPlaceholder: false } : c
+        );
+      } else {
+        const filtered = prev.filter((c) => c.id !== 'cert-placeholder-1');
+        updated = [...filtered, { ...updatedCert, isPlaceholder: false }];
+      }
+      try {
+        localStorage.setItem('anees_shahbaz_portfolio_certificates', JSON.stringify(updated));
+      } catch {
+        // Ignore
+      }
+      return updated;
+    });
+  };
+
+  const handleDeleteCertificate = (certId: string) => {
+    setCertificatesList((prev) => {
+      const updated = prev.filter((c) => c.id !== certId);
       try {
         localStorage.setItem('anees_shahbaz_portfolio_certificates', JSON.stringify(updated));
       } catch {
@@ -242,6 +276,8 @@ export default function App() {
           certificates={certificatesList}
           onOpenManage={() => setIsPersonalizeOpen(true)}
           onUpdateCertificateImage={handleUpdateCertificateImage}
+          onSaveCertificate={handleSaveCertificate}
+          onDeleteCertificate={handleDeleteCertificate}
           isAdmin={isAdmin}
         />
 
@@ -297,6 +333,40 @@ export default function App() {
         isAdmin={isAdmin}
         onExitAdmin={handleExitAdmin}
       />
+
+      {/* Floating Admin Mode Indicator (Only visible in admin mode) */}
+      {isAdmin && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-[#110D24]/95 border border-[#818CF8]/50 shadow-[0_10px_35px_rgba(0,0,0,0.85)] backdrop-blur-md flex items-center gap-2.5 sm:gap-3.5 text-xs max-w-[95vw] overflow-x-auto">
+          <span className="flex items-center gap-1.5 text-emerald-400 font-semibold whitespace-nowrap">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            Admin Mode
+          </span>
+          <span className="text-[#64748B]">•</span>
+          <button
+            type="button"
+            onClick={() => setIsPersonalizeOpen(true)}
+            className="text-white hover:text-[#A5B4FC] font-medium whitespace-nowrap cursor-pointer"
+          >
+            Edit Profile
+          </button>
+          <span className="text-[#64748B]">•</span>
+          <a
+            href="#certificates"
+            className="text-[#818CF8] hover:text-white font-medium whitespace-nowrap cursor-pointer"
+          >
+            + Certificates
+          </a>
+          <span className="text-[#64748B]">•</span>
+          <button
+            type="button"
+            onClick={handleExitAdmin}
+            className="text-rose-400 hover:text-rose-300 font-semibold whitespace-nowrap cursor-pointer"
+            title="Exit Admin Mode to see what normal visitors see"
+          >
+            Exit Admin (View As Visitor)
+          </button>
+        </div>
+      )}
     </div>
   );
 }
